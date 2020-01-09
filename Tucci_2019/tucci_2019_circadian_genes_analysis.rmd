@@ -2,7 +2,7 @@
 title: "tucci_2019_circadian_genes"
 author: "Yao-Chung Chen"
 date: "2020/1/9"
-output: rmarkdown::github_document
+output: github_document
 ---
 
 Load packages
