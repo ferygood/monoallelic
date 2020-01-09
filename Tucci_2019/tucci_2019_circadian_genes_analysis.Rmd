@@ -1,0 +1,27 @@
+---
+title: "tucci_2019_circadian_genes"
+author: "Yao-Chung Chen"
+date: "2020/1/9"
+output: html_document
+---
+
+Load packages
+```{r}
+library(dplyr)
+library(ggplot2)
+```
+
+import data and send the gene list to dbmae for prediction
+```{r}
+tucci_df <- read.table("imprinted_human_genes.csv", header = TRUE, sep = ",")
+tucci_gene_list <- tucci_df$Gene
+write(paste(tucci_gene_list, collapse = ","), "tucci_gene_list.txt")
+tucci_mae <- read.table("tucci_mae_prediction.csv", header = TRUE, sep = ",")
+colnames(tucci_mae) <- c("gene_symbol", "H3k27me3", "H3k36me3", "expression", "MAE", "tissue", "organism")
+tucci_mae_list <- tucci_mae %>% filter(MAE==" 1") %>% filter(organism==" human") # 696 observation
+sort(unique(tucci_mae_list$gene_symbol)) #149
+```
+
+```{r}
+ggplot(tucci_mae_list, aes(x=tissue)) + geom_histogram(stat = "count")
+```
